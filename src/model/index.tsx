@@ -1,19 +1,21 @@
 export interface formType {
-    text: string
+    text: string 
 }
 export interface todoType {
     id: string,
     text: string,
 }
-export interface todosComponentType {
-    todos: todoType[],
-    handleDelete: (id: string) => void,
-    handleEdit: (id: string, text: string) => void
-}
 
 export interface CardComponentType {
     i: number
-    todo: todoType,
-    handleDelete: (id: string) => void
-    handleEdit: (id: string, text: string) => void
 }
+
+export interface stateInterface {
+    todos: todoType[]
+}
+
+export type actionInterface = 
+| { type: "ADD"; payload: { id: string, text: string } }
+| { type: "GET" }
+| { type: "UPDATE"; payload: { id: string, text: string } }
+| { type: "DELETE"; payload: { id: string } }
