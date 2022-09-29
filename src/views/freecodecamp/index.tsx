@@ -34,12 +34,12 @@ const Index: React.FC = () => {
     return (
         <IndexProvider>
             <Col xs={24} md={10} style={{ margin: 2 }}>
-                <Card title="All Thing You Have To DO !">
+                <Card title="All Thing You Have To DO !" style={{ margin: '0px 8px' }}>
                     <TodosComponent />
                 </Card>
             </Col>
             <Col xs={24} md={10} style={{ margin: 2 }}>
-                <Card title="All Thing You Did !">
+                <Card title="All Thing You Did !" style={{ margin: '0px 8px' }}>
                     <CompleteTodosComopnent />
                 </Card>
             </Col>

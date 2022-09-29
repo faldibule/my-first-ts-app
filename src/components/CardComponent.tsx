@@ -57,7 +57,7 @@ const CardComponent:React.FC<CardComponentType> = ({ v, type}) => {
         })
     }
     return (
-        <Card style={{ marginTop: 3 }} actions={
+        <Card style={{ marginTop: 2 }} actions={
             actionIcon
         }>
             {isEdit ? 
