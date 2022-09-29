@@ -8,7 +8,8 @@ interface contextInterface {
 
 export const TodosContext = createContext<contextInterface>({
     state: {
-        todos: []
+        todos: [],
+        complete: [],
     }, 
     dispatch: () => null
 })

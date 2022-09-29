@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Row, Col, Input, Tooltip, Button } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
 import { todoType } from '../model'
 import { TodosContext } from '../context/TodosContext'
-
 
 
 interface Props {
@@ -13,21 +12,26 @@ interface Props {
     setForm: React.Dispatch<React.SetStateAction<{text: string}>>
 }
 
+
+
 const FormComponent: React.FC<Props> = ({ form, setForm }) => {
     const { dispatch } = useContext(TodosContext)
+    const [isLoading, seIsLoading] = useState<boolean>(false)
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const id: string = Date.now().toString()
-        dispatch({
-            type: "ADD",
-            payload: {
-                id,
-                text: form.text
-            }
-        })
-        setForm({
-            text: '',
-        })
+        seIsLoading(true)
+        setTimeout(() => {
+            seIsLoading(false)
+            dispatch({
+                type: "ADD",
+                payload: {
+                    text: form.text
+                }
+            })
+            setForm({
+                text: '',
+            })
+        }, 0);
     }
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { target: { value, name } }: { target: { value: string, name: string } } = e
@@ -37,12 +41,14 @@ const FormComponent: React.FC<Props> = ({ form, setForm }) => {
         })
     }
 
+
     return (
         <Row justify='center'>
             <Col xs={8} md={8}>
                 <form onSubmit={(e) => onSubmit(e)}>
                     <Input.Group style={{ display: 'flex' }}>
                         <Input
+                            disabled={isLoading}
                             placeholder='What you gonna do, sir ?'
                             value={form.text}
                             size="large"
@@ -51,7 +57,7 @@ const FormComponent: React.FC<Props> = ({ form, setForm }) => {
                             onChange={(e) => onChange(e)}
                         />
                         <Tooltip>
-                            <Button htmlType='submit' size='large' icon={<SendOutlined />} />
+                            <Button loading={isLoading} htmlType='submit' size='large' icon={<SendOutlined />} />
                         </Tooltip>
                     </Input.Group>
                 </form>

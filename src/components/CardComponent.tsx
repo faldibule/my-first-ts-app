@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import { Card, Typography, Space, Button, Input, Tooltip } from 'antd'
 import { CardComponentType, formType } from '../model'
 import { DeleteOutlined, EditOutlined, CheckOutlined, SendOutlined } from '@ant-design/icons'
@@ -6,17 +6,40 @@ import { TodosContext } from '../context/TodosContext'
 
 
 
-const CardComponent:React.FC<CardComponentType> = ({ i, }) => {
+const CardComponent:React.FC<CardComponentType> = ({ v, type}) => {
     const { state, dispatch } = useContext(TodosContext)
     const [form, setForm] = useState<formType>({
-        text: state.todos[i].text
+        text: v.text
     })
     
     const [isEdit, setIsEdit] = useState<boolean>(false)
+    const actionIcon = useMemo(() => {
+        if(type === "COMPLETE"){
+            return [
+                <DeleteOutlined onClick={() => dispatch({
+                    type: 'DELETE_COMPLETE',
+                    payload: {
+                        id: v.id,
+                    }
+                })} />,
+            ]
+        }else if(type === "TODOS"){
+            return [
+                <DeleteOutlined onClick={() => dispatch({
+                    type: 'DELETE',
+                    payload: {
+                        id: v.id,
+                    }
+                })} />,
+                <EditOutlined onClick={() => setIsEdit(!isEdit)} />,
+                <CheckOutlined onClick={() => dispatch({ type: "COMPLETE", payload: { id: v.id } })} />,
+            ]
+        }
+    }, [type])
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); 
-        const id = state.todos[i].id
+        const id = v.id
         dispatch({
             type: 'UPDATE',
             payload: {
@@ -34,17 +57,8 @@ const CardComponent:React.FC<CardComponentType> = ({ i, }) => {
         })
     }
     return (
-        <Card style={{ marginTop: '30px' }} key={i} actions={
-            [
-                <DeleteOutlined onClick={() => dispatch({
-                    type: 'DELETE',
-                    payload: {
-                        id: state.todos[i].id,
-                    }
-                })} />,
-                <EditOutlined onClick={() => setIsEdit(!isEdit)} />,
-                <CheckOutlined />,
-            ]
+        <Card style={{ marginTop: 3 }} actions={
+            actionIcon
         }>
             {isEdit ? 
             <form onSubmit={(e) => onSubmit(e)}>
@@ -64,7 +78,7 @@ const CardComponent:React.FC<CardComponentType> = ({ i, }) => {
             </form>
             :
             <Card.Meta
-                title={state.todos[i].text}
+                title={v.text}
             />
             }
         </Card>

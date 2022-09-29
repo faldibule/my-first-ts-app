@@ -7,15 +7,19 @@ export interface todoType {
 }
 
 export interface CardComponentType {
-    i: number
+    v: todoType
+    type: 'COMPLETE' | 'TODOS'
 }
 
 export interface stateInterface {
-    todos: todoType[]
+    todos: todoType[],
+    complete: todoType[],
 }
 
 export type actionInterface = 
-| { type: "ADD"; payload: { id: string, text: string } }
+| { type: "ADD"; payload: { text: string } }
 | { type: "GET" }
 | { type: "UPDATE"; payload: { id: string, text: string } }
 | { type: "DELETE"; payload: { id: string } }
+| { type: "COMPLETE"; payload: { id: string } }
+| { type: "DELETE_COMPLETE"; payload: { id: string } }

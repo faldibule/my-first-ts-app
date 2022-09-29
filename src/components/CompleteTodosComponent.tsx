@@ -4,16 +4,15 @@ import CardComponent from './CardComponent'
 import { TodosContext } from '../context/TodosContext'
 
 
-
-const TodosComponent: React.FC = () => {
+const CompleteTodosComopnent: React.FC = () => {
     const { state } = useContext(TodosContext)
     return (
-        <Row justify='center' gutter={[20, 10]}>
+        <Row justify='center' gutter={[47, 56]}>
             <Col xs={24} md={24}>
-                {state.todos.length > 0 &&
-                    state.todos.map((v, i) => {
+                {state.complete.length > 0 &&
+                    state.complete.map((v, i) => {
                         return (
-                            <CardComponent type='TODOS' v={v} key={v.id} />
+                            <CardComponent type='COMPLETE' v={v} key={v.id} />
                         )
                     })
                 }
@@ -22,4 +21,4 @@ const TodosComponent: React.FC = () => {
     )
 }
 
-export default TodosComponent
+export default CompleteTodosComopnent
