@@ -44,7 +44,7 @@ const FormComponent: React.FC<Props> = ({ form, setForm }) => {
 
     return (
         <Row justify='center'>
-            <Col xs={8} md={8}>
+            <Col xs={20} md={8}>
                 <form onSubmit={(e) => onSubmit(e)}>
                     <Input.Group style={{ display: 'flex' }}>
                         <Input
